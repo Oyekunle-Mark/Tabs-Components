@@ -6,7 +6,7 @@ class TabLink {
     this.itemElement = document.querySelector(
       `.tabs-item[data-tab="${this.data}"`
     );
-  
+
     this.tabItem = new TabItem(this.itemElement);
   }
 
@@ -62,7 +62,6 @@ class Tabs {
     });
   }
 }
-
 
 const links = document.querySelectorAll(".tabs-link");
 links.forEach(link => {
