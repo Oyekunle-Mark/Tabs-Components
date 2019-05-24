@@ -1,51 +1,43 @@
-
 class TabLink {
   constructor(element) {
-    // Assign this.element to the passed in DOM element
-    // this.element;
-    
-    // Get the custom data attribute on the Link
-    // this.data;
-    
-    // Using the custom data attribute get the associated Item element
-    // this.itemElement;
-    
-    // Using the Item element, create a new instance of the TabItem class
-    // this.tabItem;
-    
-    // Add a click event listener on this instance, calling the select method on click
+    this.element = element;
+    this.data = this.element.dataset.tab;
 
-  };
+    this.itemElement = document.querySelector(
+      `.tabs-item[data-tab="${this.data}"`
+    );
+
+    this.tabItem = new TabItem(this.itemElement);
+  }
 
   select() {
-    // Get all of the elements with the tabs-link class
-    // const links;
+    this.element.classList.add("tabs-link-selected");
+    this.tabItem.select();
+  }
 
-    // Using a loop or the forEach method remove the 'tabs-link-selected' class from all of the links
-    // Array.from(links).forEach();
-
-    // Add a class named "tabs-link-selected" to this link
-    // this.element;
-    
-    // Call the select method on the item associated with this link
-
+  deselect() {
+    const links = document.querySelectorAll(".tabs-link");
+    Array.from(links).forEach(link => {
+      link.classList.remove("tabs-link-selected");
+    });
   }
 }
 
 class TabItem {
   constructor(element) {
-    // Assign this.element to the passed in element
-    // this.element;
+    this.element = element;
   }
 
   select() {
-    // Select all ".tabs-item" elements from the DOM
-    // const items;
+    this.deselect();
+    this.element.classList.add("tabs-item-selected");
+  }
 
-    // Remove the class "tabs-item-selected" from each element
-    
-    // Add a class named "tabs-item-selected" to this element
-    //this.element;
+  deselect() {
+    const items = document.querySelectorAll(".tabs-item");
+    items.forEach(item => {
+      item.classList.remove("tabs-item-selected");
+    });
   }
 }
 
@@ -59,4 +51,19 @@ class TabItem {
 
 */
 
-links = document.querySelectorAll();
+class Tabs {
+  constructor(tab) {
+    this.tab = tab;
+    this.tabLink = new TabLink(this.tab);
+
+    this.tab.addEventListener("click", () => {
+      this.tabLink.deselect();
+      this.tabLink.select();
+    });
+  }
+}
+
+const links = document.querySelectorAll(".tabs-link");
+links.forEach(link => {
+  new Tabs(link);
+});
